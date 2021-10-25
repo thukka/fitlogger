@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { Container } from '@mui/material';
@@ -28,12 +29,12 @@ const theme = createTheme({
 });
 
 ReactDOM.render(
-    <ThemeProvider theme={theme}>
-      <CssBaseLine />
-      
-      <Container>
-        <App />
-      </Container>
-    </ThemeProvider>,
+  <ThemeProvider theme={theme}>
+    <CssBaseLine />
+
+    <Container>
+      <App />
+    </Container>
+  </ThemeProvider>,
   document.getElementById('root')
 );
