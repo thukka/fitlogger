@@ -20,8 +20,11 @@ const FrontPage = () => {
       }}>
       <Typography component='h1' variant='h5'>Add entry</Typography>
 
-      <TextField id='input-date' margin='normal' label='Date' variant='outlined' />
+      <TextField id='input-date' margin='normal' label='Date' variant='outlined' type='date' InputLabelProps={{
+        shrink: true,
+      }} />
       <TextField id='input-kilometers' margin='normal' label='Kilometers' variant='outlined' />
+      <TextField id='input-duration' margin='normal' label='Duration (minutes)' variant='outlined' />
       <TextField id='input-difficulty' margin='normal' label='Difficulty level' variant='outlined' />
 
       <Stack spacing={2} direction='row' sx={{ mt: 2 }}>
