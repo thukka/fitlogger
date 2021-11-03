@@ -3,27 +3,7 @@ import Navigation from './Navigation';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { styled } from '@mui/material/styles';
-
-const dummyData = [
-  {
-    date: '12-01-2020',
-    kilometers: '10.5',
-    duration: '30',
-    difficulty: '6'
-  },
-  {
-    date: '15-02-2021',
-    kilometers: '6.6',
-    duration: '20',
-    difficulty: '5'
-  },
-  {
-    date: '13-06-2021',
-    kilometers: '15.6',
-    duration: '45',
-    difficulty: '5'
-  }
-];
+import { dummyData } from '../dummyData';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -39,6 +19,7 @@ const StatPage = () => {
         marginTop: 6,
         display: 'flex',
         flexDirection: 'column',
+        overflow: 'auto'
       }}
     >
       <Stack direction='row' justifyContent='center' alignItems='center' spacing={2} mb={4} >
@@ -48,8 +29,9 @@ const StatPage = () => {
         60 hours</Item>
       </Stack>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+
+      <TableContainer component={Paper} sx={{ minHeight: 350, marginBottom: 10 }}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" stickyHeader >
           <TableHead>
             <TableRow>
               <TableCell>Date</TableCell>
@@ -60,8 +42,8 @@ const StatPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dummyData.map((entry) => (
-              <TableRow key={entry.date}>
+            {dummyData.sort((a, b) => Date.parse(b.date) - Date.parse(a.date)).map((entry, index) => (
+              <TableRow key={index}>
                 <TableCell component='th' scope='row'>
                   {entry.date}
                 </TableCell>
