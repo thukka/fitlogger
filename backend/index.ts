@@ -1,5 +1,6 @@
 require('dotenv').config();
 import express from 'express';
+import cors from 'cors';
 import entryRouter from './src/routes/entry';
 import usersRouter from './src/routes/users';
 import loginRouter from './src/routes/login';
@@ -16,6 +17,7 @@ const run = async(): Promise<void> => {
 
 run().catch(err => console.log(err));
 
+app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
 
