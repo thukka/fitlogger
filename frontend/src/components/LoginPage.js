@@ -1,15 +1,35 @@
 import React from 'react';
 import { Container, Box, Avatar, Typography, TextField, Button } from '@mui/material';
+import axios from 'axios';
 import LockOutlinedIcon from '@mui/icons-material/LockClockOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import InputAdornment from '@mui/material/InputAdornment';
+import { useHistory } from 'react-router-dom';
 
-const LoginPage = () => {
-  const handleSubmit = (event) => {
+const LoginPage = ({ setUser, SetErrorMessage }) => {
+  const history = useHistory();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log('email:', data.get('email'), 'pw:', data.get('password'));
+
+    try {
+      const loginUser = await axios.post('http://localhost:3003/api/login', { email: data.get('email'), password: data.get('password') });
+      console.log('login user: ', loginUser);
+      setUser(loginUser.data);
+      window.localStorage.setItem('loggedUser', JSON.stringify(loginUser.data));
+      history.push('/frontpage');
+    } catch (err) {
+      let errMsg = err.response?.data.error;
+
+      if (errMsg === undefined) {
+        errMsg = err.message;
+      }
+
+      SetErrorMessage(errMsg);
+    }
   };
 
   return (
