@@ -24,9 +24,11 @@ const StatPage = () => {
     >
       <Stack direction='row' justifyContent='center' alignItems='center' spacing={2} mb={4} >
         <Item><strong>Total km</strong><br />
-        500km</Item>
+        500km
+        </Item>
         <Item><strong>Total duration</strong><br />
-        60 hours</Item>
+        60 hours
+        </Item>
       </Stack>
 
 
