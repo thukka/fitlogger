@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Container } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseLine from '@mui/material/CssBaseline';
@@ -33,7 +34,9 @@ ReactDOM.render(
     <CssBaseLine />
 
     <Container>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Container>
   </ThemeProvider>,
   document.getElementById('root')
