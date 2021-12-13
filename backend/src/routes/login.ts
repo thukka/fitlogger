@@ -8,11 +8,9 @@ router.post('/', async (req, res) => {
     const body = req.body;
     const user: any = await User.findOne({ email: body.email });
 
-    const passwordCorrect = user === null 
-    ? false
-    : await bcrypt.compare(body.password, user.passwordHash);
-
-    console.log('password correct? ', passwordCorrect);
+    const passwordCorrect = user === null
+        ? false
+        : await bcrypt.compare(body.password, user.passwordHash);
 
     if (!(user && passwordCorrect)) {
         return res.status(401).json({
