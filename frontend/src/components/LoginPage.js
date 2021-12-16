@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Box, Avatar, Typography, TextField, Button } from '@mui/material';
-import axios from 'axios';
+import loginUser from '../services/login';
 import LockOutlinedIcon from '@mui/icons-material/LockClockOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
@@ -13,13 +13,14 @@ const LoginPage = ({ setUser, SetErrorMessage }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log('email:', data.get('email'), 'pw:', data.get('password'));
 
     try {
-      const loginUser = await axios.post('http://localhost:3003/api/login', { email: data.get('email'), password: data.get('password') });
-      console.log('login user: ', loginUser);
-      setUser(loginUser.data);
-      window.localStorage.setItem('loggedUser', JSON.stringify(loginUser.data));
+      const email = data.get('email');
+      const password = data.get('password');
+      const userData = await loginUser(email, password);
+
+      setUser(userData);
+      window.localStorage.setItem('loggedUser', JSON.stringify(userData));
       history.push('/frontpage');
     } catch (err) {
       let errMsg = err.response?.data.error;
