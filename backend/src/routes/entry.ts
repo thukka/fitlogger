@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
     try {
         decodedToken = jwt.verify(token as string, process.env.SECRET as string) as JwtPayload;
     } catch ({ message }) {
-        console.log('Something went wrong when verifying token ', message);
+        console.log('Something went wrong when verifying token: ', message);
     }
 
     if (!token || decodedToken === undefined) {
