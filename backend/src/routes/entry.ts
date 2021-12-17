@@ -1,8 +1,8 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
 const router = express.Router();
 import Entry from '../models/entry';
-import { JwtPayload, Entry as EntryType } from '../types';
+import { Entry as EntryType } from '../types';
+import verifyToken from '../utils/verifyToken';
 
 router.post('/new', async (req, res) => {
     try {
@@ -25,16 +25,10 @@ router.post('/new', async (req, res) => {
 router.get('/', async (req, res) => {
 
     const token = req.headers.authorization;
-    let decodedToken;
-
-    try {
-        decodedToken = jwt.verify(token as string, process.env.SECRET as string) as JwtPayload;
-    } catch ({ message }) {
-        console.log('Something went wrong when verifying token: ', message);
-    }
+    let decodedToken = verifyToken(token as string);
 
     if (!token || decodedToken === undefined) {
-        return res.status(400).send('Token was not found');
+        return res.status(401).json({ error: 'Token expired or it was not found' });
     }
 
     const user = decodedToken.username;
@@ -44,6 +38,23 @@ router.get('/', async (req, res) => {
     } catch ({ message }) {
         return res.status(400).send(message);
     }
+});
+
+router.delete('/:id', async (req, res) => {
+    const token = req.headers.authorization;
+    let decodedToken = verifyToken(token as string);
+
+    if (!token || decodedToken === undefined) {
+        return res.status(401).json({ error: 'Token expired or it was not found' });
+    }
+
+    const entry: EntryType | null = await Entry.findById(req.params.id);
+    if (decodedToken.username.toString() === entry?.user) {
+        await Entry.findByIdAndRemove(req.params.id);
+        return res.status(204).send('Entry deleted');
+    }
+
+    return res.status(401).json({ error: 'Unauthorized access' });
 });
 
 export default router;
