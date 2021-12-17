@@ -3,7 +3,7 @@ import Navigation from './Navigation';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { styled } from '@mui/material/styles';
-import { getUserEntry } from '../services/entry';
+import { getUserEntry, deleteEntry } from '../services/entry';
 import returnSum from '../utils/stat';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -23,9 +23,25 @@ const StatPage = ({ user }) => {
     durationSum = returnSum(entryData.map(x => x.duration));
   }
 
-  useEffect(async () => {
+  const fetchUserData = async () => {
     const userEntry = await getUserEntry(user.token);
     setEntryData(userEntry);
+  };
+
+  const promptDelete = async ({ date, id }) => {
+    if (window.confirm(`Delete entry ${date} ?`)) {
+      try {
+        await deleteEntry(id, user.token);
+        fetchUserData();
+
+      } catch ({ message }) {
+        console.error('Something went wrong when deleting entry: ', message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
   }, []);
 
   return (
@@ -67,7 +83,7 @@ const StatPage = ({ user }) => {
                 <TableCell>{entry.distance}</TableCell>
                 <TableCell>{entry.duration}</TableCell>
                 <TableCell>{entry.difficulty}</TableCell>
-                <TableCell><DeleteForeverIcon /></TableCell>
+                <TableCell><DeleteForeverIcon onClick={() => promptDelete(entry)} /></TableCell>
               </TableRow>
             ))}
           </TableBody>

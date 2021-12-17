@@ -15,4 +15,13 @@ const getUserEntry = async (token) => {
   return userEntryList.data;
 };
 
-export { addEntry, getUserEntry };
+const deleteEntry = async (id, token) => {
+  const deleteId = await axios.delete(`${baseUrl}/${id}`, {
+    headers: {
+      Authorization: token
+    }
+  });
+  return deleteId;
+};
+
+export { addEntry, getUserEntry, deleteEntry };
