@@ -7,9 +7,9 @@ import Notification from './components/Notification';
 
 const App = () => {
 
-  const [error, setError] = useState(null);
+  const [notification, setNotification] = useState(null);
+  const [isError, setIsError] = useState(false);
   const [user, setUser] = useState(null);
-  console.log('user: ', user);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -19,20 +19,22 @@ const App = () => {
     }
   }, []);
 
-  const SetErrorMessage = (msg) => {
-    setError(msg);
+  const SetNotificationMessage = (msg) => {
+    setNotification(msg);
     setTimeout(() => {
-      setError(null);
+      setNotification(null);
+      setIsError(false);
     }, 5000);
   };
 
   return user !== null ? (
     <Switch>
       <Route path='/frontpage'>
-        <FrontPage user={user} />
+        {notification ? <Notification error={isError} notification={notification} /> : null}
+        <FrontPage user={user} SetNotificationMessage={SetNotificationMessage} />
       </Route>
       <Route path='/stats'>
-        <StatPage />
+        <StatPage user={user} />
       </Route>
       <Route path='/'>
         {user !== null ? <Redirect to='/frontpage' /> : <LoginPage setUser={setUser} />}
@@ -40,8 +42,8 @@ const App = () => {
     </Switch>
   ) : (
     <>
-      {error ? <Notification error={error} /> : null}
-      <LoginPage setUser={setUser} SetErrorMessage={SetErrorMessage} />
+      {notification ? <Notification error={isError} notification={notification} /> : null}
+      <LoginPage setUser={setUser} SetNotificationMessage={SetNotificationMessage} setIsError={setIsError} />
     </>
   );
 };

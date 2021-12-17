@@ -4,11 +4,14 @@ import { Link } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useHistory } from 'react-router-dom';
 
 const Navigation = () => {
+  const history = useHistory();
 
   const LogOutUser = () => {
     window.localStorage.clear();
+    history.push('/');
     window.location.reload();
   };
 
