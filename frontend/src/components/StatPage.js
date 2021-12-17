@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from './Navigation';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { styled } from '@mui/material/styles';
-import { dummyData } from '../dummyData';
+import { getUserEntry } from '../services/entry';
+import returnSum from '../utils/stat';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -12,7 +13,21 @@ const Item = styled(Paper)(({ theme }) => ({
   width: '50%'
 }));
 
-const StatPage = () => {
+const StatPage = ({ user }) => {
+  const [entryData, setEntryData] = useState([]);
+  let distanceSum = 0;
+  let durationSum = 0;
+
+  if (entryData.length >= 1) {
+    distanceSum = returnSum(entryData.map(x => x.distance));
+    durationSum = returnSum(entryData.map(x => x.duration));
+  }
+
+  useEffect(async () => {
+    const userEntry = await getUserEntry(user.token);
+    setEntryData(userEntry);
+  }, []);
+
   return (
     <Box
       sx={{
@@ -23,11 +38,11 @@ const StatPage = () => {
       }}
     >
       <Stack direction='row' justifyContent='center' alignItems='center' spacing={2} mb={4} >
-        <Item><strong>Total km</strong><br />
-        500km
+        <Item><strong>Total distance</strong><br />
+          {distanceSum.toFixed(1)} km
         </Item>
         <Item><strong>Total duration</strong><br />
-        60 hours
+          {(durationSum / 60).toFixed(1)} hours
         </Item>
       </Stack>
 
@@ -44,12 +59,12 @@ const StatPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dummyData.sort((a, b) => Date.parse(b.date) - Date.parse(a.date)).map((entry, index) => (
+            {entryData.sort((a, b) => Date.parse(b.date) - Date.parse(a.date)).map((entry, index) => (
               <TableRow key={index}>
                 <TableCell component='th' scope='row'>
                   {entry.date}
                 </TableCell>
-                <TableCell>{entry.kilometers}</TableCell>
+                <TableCell>{entry.distance}</TableCell>
                 <TableCell>{entry.duration}</TableCell>
                 <TableCell>{entry.difficulty}</TableCell>
                 <TableCell><DeleteForeverIcon /></TableCell>
