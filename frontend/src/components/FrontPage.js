@@ -1,15 +1,29 @@
 import React from 'react';
 import Navigation from './Navigation';
 import { Box, TextField, Typography, Button, Stack } from '@mui/material';
+import { addEntry } from '../services/entry';
 
-const FrontPage = ( { user }) => {
+const FrontPage = ({ user, SetNotificationMessage }) => {
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('submit was pressed!');
     const data = new FormData(event.currentTarget);
-    console.log('get input kilometers', data.get('distance'));
-    console.log('get date: ', data.get('date'));
+
+    const distance = data.get('distance');
+    const date = data.get('date');
+    const difficulty = data.get('difficulty');
+    const duration = data.get('duration');
+
+    const entry = {
+      user: user.username,
+      date: date,
+      difficulty: difficulty,
+      duration: duration,
+      distance: distance,
+    };
+
+    await addEntry(user.token, entry);
+    SetNotificationMessage('New entry added!');
   };
 
   return (
@@ -28,7 +42,7 @@ const FrontPage = ( { user }) => {
       }} />
       <TextField id='input-distance' name='distance' margin='normal' label='Distance (km)' variant='outlined' />
       <TextField id='input-duration' name='duration' margin='normal' label='Duration (minutes)' variant='outlined' />
-      <TextField id='input-difficulty' name='difficulty' margin='normal' label='Difficulty level' variant='outlined' />
+      <TextField id='input-difficulty' name='difficulty' margin='normal' label='Difficulty level (1-10)' variant='outlined' />
       <Stack spacing={2} direction='row' sx={{ mt: 2 }}>
         <Button variant='outlined'>Reset</Button>
         <Button variant='contained' type='submit'>Submit</Button>
