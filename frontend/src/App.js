@@ -19,7 +19,7 @@ const App = () => {
     }
   }, []);
 
-  const SetNotificationMessage = (msg) => {
+  const setNotificationMessage = (msg) => {
     setNotification(msg);
     setTimeout(() => {
       setNotification(null);
@@ -31,7 +31,7 @@ const App = () => {
     <Switch>
       <Route path='/frontpage'>
         {notification ? <Notification error={isError} notification={notification} /> : null}
-        <FrontPage user={user} SetNotificationMessage={SetNotificationMessage} />
+        <FrontPage user={user} setNotificationMessage={setNotificationMessage} />
       </Route>
       <Route path='/stats'>
         <StatPage user={user} />
@@ -43,7 +43,7 @@ const App = () => {
   ) : (
     <>
       {notification ? <Notification error={isError} notification={notification} /> : null}
-      <LoginPage setUser={setUser} SetNotificationMessage={SetNotificationMessage} setIsError={setIsError} />
+      <LoginPage setUser={setUser} setNotificationMessage={setNotificationMessage} setIsError={setIsError} />
     </>
   );
 };
