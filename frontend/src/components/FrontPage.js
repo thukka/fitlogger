@@ -3,7 +3,7 @@ import Navigation from './Navigation';
 import { Box, TextField, Typography, Button, Stack } from '@mui/material';
 import { addEntry } from '../services/entry';
 
-const FrontPage = ({ user, SetNotificationMessage }) => {
+const FrontPage = ({ user, setNotificationMessage }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,13 +17,13 @@ const FrontPage = ({ user, SetNotificationMessage }) => {
     const entry = {
       user: user.username,
       date: date,
-      difficulty: difficulty,
+      difficulty: difficulty.length <= 0 ? 0 : difficulty,
       duration: duration,
       distance: distance,
     };
 
     await addEntry(user.token, entry);
-    SetNotificationMessage('New entry added!');
+    setNotificationMessage('New entry added!');
   };
 
   return (
