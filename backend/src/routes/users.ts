@@ -3,7 +3,7 @@ const router = express.Router();
 import bcrypt from 'bcrypt';
 import User from '../models/user';
 import { User as UserType, NewUser } from '../types';
-import parseNewUser from '../utils/parseNewUser';
+import parseNewUser, { parsePassword } from '../utils/parseNewUser';
 
 router.get('/', async (_req, res) => {
     const users: UserType[] = await User.find({});
@@ -27,6 +27,18 @@ router.post('/', async (req, res) => {
         res.json(savedUser);
     } catch ({ message }) {
         res.status(400).send(message);
+    }
+});
+
+router.put('/reset', async (req, res) => {
+    try {
+        const email = req.body.email;
+        const newPassword = parsePassword(req.body.password);
+        const newPasswordHash = await bcrypt.hash(newPassword, 10);
+        const updatedUser = await User.findOneAndUpdate({ email: email }, { passwordHash: newPasswordHash }, { new: true });
+        res.json(updatedUser);
+    } catch ({ message }) {
+        res.status(401).send(message);
     }
 });
 
