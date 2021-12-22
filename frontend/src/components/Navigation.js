@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 const Navigation = () => {
   const history = useHistory();
 
-  const LogOutUser = () => {
+  const logOutUser = () => {
     window.localStorage.clear();
     history.push('/');
     window.location.reload();
@@ -20,9 +20,9 @@ const Navigation = () => {
       <BottomNavigation
         showLabels
       >
-        <BottomNavigationAction component={Link} to='/frontpage' label='Frontpage' icon={<HomeIcon sx={{ color: 'lightblue' }} />} />
+        <BottomNavigationAction component={Link} to='/frontpage' label='Home' icon={<HomeIcon sx={{ color: 'lightblue' }} />} />
         <BottomNavigationAction component={Link} to='/stats'label='Stats' icon={<BarChartIcon sx={{ color: 'green' }} />} />
-        <BottomNavigationAction onClick={LogOutUser} label='Logout' icon={<LogoutIcon sx={{ color: 'darkred' }} />} />
+        <BottomNavigationAction onClick={logOutUser} label='Logout' icon={<LogoutIcon sx={{ color: 'darkred' }} />} />
       </BottomNavigation>
     </Paper>
   );
