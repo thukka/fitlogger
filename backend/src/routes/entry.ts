@@ -23,7 +23,6 @@ router.post('/new', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-
     const token = req.headers.authorization;
     let decodedToken = verifyToken(token as string);
 
