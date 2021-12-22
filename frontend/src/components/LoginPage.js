@@ -7,7 +7,7 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useHistory } from 'react-router-dom';
 
-const LoginPage = ({ setUser, SetNotificationMessage, setIsError }) => {
+const LoginPage = ({ setUser, setNotificationMessage, setIsError }) => {
   const history = useHistory();
 
   const handleSubmit = async (event) => {
@@ -29,7 +29,7 @@ const LoginPage = ({ setUser, SetNotificationMessage, setIsError }) => {
         errMsg = err.message;
       }
       setIsError(true);
-      SetNotificationMessage(errMsg);
+      setNotificationMessage(errMsg);
     }
   };
 
