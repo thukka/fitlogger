@@ -11,7 +11,7 @@ const parseString = (str: unknown): string => {
     return str;
 };
 
-const parsePassword = (str: unknown): string => {
+export const parsePassword = (str: unknown): string => {
     if (!str || !isString(str)) {
         throw new Error('Password is not a string or it is missing! ' + str);
     }
