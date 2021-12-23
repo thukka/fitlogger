@@ -14,18 +14,10 @@ import '@fontsource/roboto/700.css';
 const theme = createTheme({
   palette: {
     mode: 'dark',
-    /*     primary: {
-          light: '#6d6d6d',
-          main: '#424242',
-          dark: '#1b1b1b',
-          contrastText: '#ffffff'
-        },
-        secondary: {
-          light: '#ffd95a',
-          main: '#f9a825',
-          dark: '#c17900',
-          contrastText: '#000000'
-        } */
+    background: {
+      default: '#303030',
+      paper: '#424242'
+    }
   }
 });
 
