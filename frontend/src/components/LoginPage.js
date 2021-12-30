@@ -86,6 +86,7 @@ const LoginPage = ({ setUser, setNotificationMessage, setIsError }) => {
             }}
           />
           <Button
+            id='login-button'
             type='submit'
             fullWidth
             variant='contained'
