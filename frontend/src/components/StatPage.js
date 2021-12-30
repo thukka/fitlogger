@@ -83,7 +83,7 @@ const StatPage = ({ user }) => {
                 <TableCell>{entry.distance}</TableCell>
                 <TableCell>{entry.duration}</TableCell>
                 <TableCell>{entry.difficulty}</TableCell>
-                <TableCell><DeleteForeverIcon onClick={() => promptDelete(entry)} /></TableCell>
+                <TableCell><DeleteForeverIcon id='delete-icon' onClick={() => promptDelete(entry)} /></TableCell>
               </TableRow>
             ))}
           </TableBody>
