@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'http://localhost:3003/api/entry/';
+const baseUrl = '/api/entry/';
 
 const addEntry = async (token, entry) => {
   const newEntry = await axios.post(`${baseUrl}/new`, entry, { Authorization: token });
