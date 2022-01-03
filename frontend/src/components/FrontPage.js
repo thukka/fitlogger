@@ -2,8 +2,10 @@ import React from 'react';
 import Navigation from './Navigation';
 import { Box, TextField, Typography, Button, Stack } from '@mui/material';
 import { addEntry } from '../services/entry';
+import { useSelector } from 'react-redux';
 
-const FrontPage = ({ user, setNotificationMessage }) => {
+const FrontPage = ({ setNotificationMessage }) => {
+  const user = useSelector(state => state);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
