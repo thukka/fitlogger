@@ -1,33 +1,33 @@
 import React from 'react';
 import { Container, Box, Avatar, Typography, TextField, Button } from '@mui/material';
-import loginUser from '../services/login';
 import LockOutlinedIcon from '@mui/icons-material/LockClockOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logUser } from '../reducers/userReducer';
 
-const LoginPage = ({ setUser, setNotificationMessage, setIsError }) => {
+const LoginPage = ({ setNotificationMessage, setIsError }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     try {
+      history.push('/frontpage');
       const email = data.get('email');
       const password = data.get('password');
-      const userData = await loginUser(email, password);
-
-      setUser(userData);
-      window.localStorage.setItem('loggedUser', JSON.stringify(userData));
-      history.push('/frontpage');
+      dispatch(logUser(email, password));
     } catch (err) {
       let errMsg = err.response?.data.error;
 
       if (errMsg === undefined) {
         errMsg = err.message;
       }
+
       setIsError(true);
       setNotificationMessage(errMsg);
     }
