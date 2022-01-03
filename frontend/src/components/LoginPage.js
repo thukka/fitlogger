@@ -8,29 +8,17 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logUser } from '../reducers/userReducer';
 
-const LoginPage = ({ setNotificationMessage, setIsError }) => {
+const LoginPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    try {
-      history.push('/frontpage');
-      const email = data.get('email');
-      const password = data.get('password');
-      dispatch(logUser(email, password));
-    } catch (err) {
-      let errMsg = err.response?.data.error;
-
-      if (errMsg === undefined) {
-        errMsg = err.message;
-      }
-
-      setIsError(true);
-      setNotificationMessage(errMsg);
-    }
+    history.push('/frontpage');
+    const email = data.get('email');
+    const password = data.get('password');
+    dispatch(logUser(email, password));
   };
 
   return (
