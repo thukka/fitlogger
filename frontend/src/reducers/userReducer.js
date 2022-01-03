@@ -1,4 +1,7 @@
 import loginUser from '../services/login';
+/* import { setNotification } from './notificationReducer'; */
+/* import setNotificationMessage from '../utils/notification'; */
+import { setNotification, resetNotification } from './notificationReducer';
 
 const userReducer = (state = null, action) => {
   switch (action.type) {
@@ -20,9 +23,22 @@ export const setUser = (user) => {
 
 export const logUser = (email, password) => {
   return async dispatch => {
-    const userData = await loginUser(email, password);
-    window.localStorage.setItem('loggedUser', JSON.stringify(userData));
-    dispatch(setUser(userData));
+    try {
+      const userData = await loginUser(email, password);
+      window.localStorage.setItem('loggedUser', JSON.stringify(userData));
+      dispatch(setUser(userData));
+    } catch (err) {
+      let errMsg = err.response?.data.error;
+
+      if (errMsg === undefined) {
+        errMsg = err.message;
+      }
+
+      dispatch(setNotification(errMsg, true));
+      setTimeout(() => {
+        dispatch(resetNotification());
+      }, 5000);
+    }
   };
 };
 
