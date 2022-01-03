@@ -5,6 +5,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { styled } from '@mui/material/styles';
 import { getUserEntry, deleteEntry } from '../services/entry';
 import returnSum from '../utils/stat';
+import { useSelector } from 'react-redux';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -13,8 +14,9 @@ const Item = styled(Paper)(({ theme }) => ({
   width: '50%'
 }));
 
-const StatPage = ({ user }) => {
+const StatPage = () => {
   const [entryData, setEntryData] = useState([]);
+  const user = useSelector(state => state);
   let distanceSum = 0;
   let durationSum = 0;
 
