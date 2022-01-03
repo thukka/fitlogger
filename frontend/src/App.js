@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import LoginPage from './components/LoginPage';
 import FrontPage from './components/FrontPage';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -8,9 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from './reducers/userReducer';
 
 const App = () => {
-
-  const [notification, setNotification] = useState(null);
-  const [isError, setIsError] = useState(false);
+  const notification = useSelector(state => state.notification.message);
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
@@ -22,19 +20,11 @@ const App = () => {
     }
   }, []);
 
-  const setNotificationMessage = (msg) => {
-    setNotification(msg);
-    setTimeout(() => {
-      setNotification(null);
-      setIsError(false);
-    }, 5000);
-  };
-
   return user !== null ? (
     <Switch>
       <Route path='/frontpage'>
-        {notification ? <Notification error={isError} notification={notification} /> : null}
-        <FrontPage setNotificationMessage={setNotificationMessage} />
+        {notification ? <Notification /> : null}
+        <FrontPage />
       </Route>
       <Route path='/stats'>
         <StatPage />
@@ -45,8 +35,8 @@ const App = () => {
     </Switch>
   ) : (
     <>
-      {notification ? <Notification error={isError} notification={notification} /> : null}
-      <LoginPage setNotificationMessage={setNotificationMessage} setIsError={setIsError} />
+      {notification ? <Notification /> : null}
+      <LoginPage />
     </>
   );
 };

@@ -16,7 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const StatPage = () => {
   const [entryData, setEntryData] = useState([]);
-  const user = useSelector(state => state);
+  const user = useSelector(state => state.user);
   let distanceSum = 0;
   let durationSum = 0;
 

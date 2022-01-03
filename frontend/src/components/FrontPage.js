@@ -2,10 +2,12 @@ import React from 'react';
 import Navigation from './Navigation';
 import { Box, TextField, Typography, Button, Stack } from '@mui/material';
 import { addEntry } from '../services/entry';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { resetNotification, setNotification } from '../reducers/notificationReducer';
 
-const FrontPage = ({ setNotificationMessage }) => {
-  const user = useSelector(state => state);
+const FrontPage = () => {
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,7 +27,10 @@ const FrontPage = ({ setNotificationMessage }) => {
     };
 
     await addEntry(user.token, entry);
-    setNotificationMessage('New entry added!');
+    dispatch(setNotification('New entry added!'));
+    setTimeout(() => {
+      dispatch(resetNotification());
+    }, 4000);
   };
 
   return (

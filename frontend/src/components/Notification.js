@@ -1,8 +1,11 @@
 import React from 'react';
 import { Alert, AlertTitle } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-const Notification = ({ error, notification }) => {
+const Notification = () => {
 
+  const notification = useSelector(state => state.notification.message);
+  const error = useSelector(state => state.notification.isError);
   const notificationStyle = { 'top': 10, 'position': 'absolute', 'zIndex': 9 };
 
   if (!error) {
