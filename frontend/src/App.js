@@ -11,7 +11,7 @@ const App = () => {
 
   const [notification, setNotification] = useState(null);
   const [isError, setIsError] = useState(false);
-  const user = useSelector(state => state);
+  const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
