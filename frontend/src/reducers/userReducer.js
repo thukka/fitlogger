@@ -1,14 +1,18 @@
 import loginUser from '../services/login';
-/* import { setNotification } from './notificationReducer'; */
-/* import setNotificationMessage from '../utils/notification'; */
-import { setNotification, resetNotification } from './notificationReducer';
+import { timerNotification } from './notificationReducer';
 
-const userReducer = (state = null, action) => {
+const initialState = {
+  name: null,
+  token: null,
+  username: null
+};
+
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
   case 'SET_USER':
     return action.user;
   case 'LOG_OUT':
-    return null;
+    return { ...initialState };
   default:
     return state;
   }
@@ -34,10 +38,7 @@ export const logUser = (email, password) => {
         errMsg = err.message;
       }
 
-      dispatch(setNotification(errMsg, true));
-      setTimeout(() => {
-        dispatch(resetNotification());
-      }, 5000);
+      dispatch(timerNotification(errMsg, true));
     }
   };
 };
