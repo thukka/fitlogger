@@ -8,8 +8,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from './reducers/userReducer';
 
 const App = () => {
-  const notification = useSelector(state => state.notification.message);
-  const user = useSelector(state => state.user);
+  const selectorNotification = state => state.notification.message;
+  const selectorUser = state => state.user;
+  const notification = useSelector(selectorNotification);
+  const user = useSelector(selectorUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,7 +22,7 @@ const App = () => {
     }
   }, []);
 
-  return user !== null ? (
+  return user.username !== null ? (
     <Switch>
       <Route path='/frontpage'>
         {notification ? <Notification /> : null}
@@ -30,7 +32,7 @@ const App = () => {
         <StatPage />
       </Route>
       <Route path='/'>
-        {user !== null ? <Redirect to='/frontpage' /> : <LoginPage />}
+        {user.username !== null ? <Redirect to='/frontpage' /> : <LoginPage />}
       </Route>
     </Switch>
   ) : (
