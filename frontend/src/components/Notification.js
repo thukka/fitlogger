@@ -3,9 +3,10 @@ import { Alert, AlertTitle } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 const Notification = () => {
-
-  const notification = useSelector(state => state.notification.message);
-  const error = useSelector(state => state.notification.isError);
+  const selectorNotification = state => state.notification.message;
+  const selectorError = state => state.notification.isError;
+  const notification = useSelector(selectorNotification);
+  const error = useSelector(selectorError);
   const notificationStyle = { 'top': 10, 'position': 'absolute', 'zIndex': 9 };
 
   if (!error) {
