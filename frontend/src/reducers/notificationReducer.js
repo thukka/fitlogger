@@ -28,4 +28,13 @@ export const setNotification = (message, isError) => {
   });
 };
 
+export const timerNotification = (message, isError) => {
+  return async dispatch => {
+    dispatch(setNotification(message, isError));
+    setTimeout(() => {
+      dispatch(resetNotification());
+    }, 4000);
+  };
+};
+
 export default reducer;
