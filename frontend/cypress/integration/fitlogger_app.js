@@ -5,7 +5,7 @@ describe('Fitlogger', function () {
       name: 'teppo testaaja',
       password: 'testi',
       email: 'testi'
-    }
+    };
     cy.request('POST', 'http://localhost:3000/api/users/', user);
     cy.visit('http://localhost:3000');
   });
@@ -44,7 +44,7 @@ describe('Fitlogger', function () {
       cy.contains('New entry added!');
     });
 
-    it.only('Entry can be deleted', function () {
+    it('Entry can be deleted', function () {
       cy.get('#input-date').type('2022-12-01');
       cy.get('#input-distance').type('10');
       cy.get('#input-duration').type('35');
@@ -53,6 +53,25 @@ describe('Fitlogger', function () {
       cy.contains('New entry added!');
       cy.contains('Stats').click();
       cy.get('#delete-icon').click();
+    });
+  });
+
+  describe('User can\'t access website if auth failed', function() {
+    beforeEach(function () {
+      cy.get('#email').type('testi');
+      cy.get('#password').type('wrong');
+      cy.get('#login-button').click();
+      cy.get('html').should('contain', 'Invalid username or password');
+    });
+
+    it('User cannot access statpage', function() {
+      cy.visit('http://localhost:3000/stats');
+      cy.get('html').should('not.contain', 'Total distance');
+    });
+
+    it('User cannot access homepage', function() {
+      cy.visit('http://localhost:3000/stats');
+      cy.get('html').should('not.contain', 'Hello teppo testaaja :)');
     });
   });
 });
