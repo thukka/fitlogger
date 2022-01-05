@@ -7,7 +7,8 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:react-redux/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -19,7 +20,8 @@ module.exports = {
     "plugins": [
         "react",
         "jest",
-        "cypress"
+        "cypress",
+        "react-redux"
     ],
     "rules": {
         "indent": [
