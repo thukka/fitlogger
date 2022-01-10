@@ -1,4 +1,4 @@
-import { User } from '../types';
+import { MongoReturnedObjectUser, User } from '../types';
 import mongoose, { Schema } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 
@@ -19,13 +19,13 @@ const userSchema = new Schema<User>({
 
 userSchema.plugin(uniqueValidator);
 userSchema.set('toJSON', {
-    transform: (_document, returnedObject) => {
-        returnedObject.id = returnedObject._id.toString();
+    transform: (_document, returnedObject: MongoReturnedObjectUser) => {
+        returnedObject.id = returnedObject._id?.toString();
         delete returnedObject._id;
         delete returnedObject.__v;
         delete returnedObject.passwordHash;
     }
-})
+});
 
 const User = mongoose.model<User>('User', userSchema);
 
