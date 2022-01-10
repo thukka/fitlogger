@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { timerNotification } from '../reducers/notificationReducer';
 
 const checkField = (field) => {
-  return field.length <= 0 ? 0 : field;
+  return field.length <= 0 ? '0' : String(field);
 };
 
 const FrontPage = () => {
@@ -35,7 +35,7 @@ const FrontPage = () => {
       await addEntry(user.token, entry);
       dispatch(timerNotification('New entry added!'));
     } catch (error) {
-      dispatch(timerNotification('Only numbers are allowed', true));
+      dispatch(timerNotification('Only numbers are allowed.', true));
     }
   };
 
