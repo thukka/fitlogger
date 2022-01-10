@@ -1,4 +1,4 @@
-import { Entry } from '../types';
+import { Entry, MongoReturnedObjectEntry } from '../types';
 import mongoose, { Schema } from 'mongoose';
 
 const entrySchema = new Schema<Entry>({
@@ -19,15 +19,15 @@ const entrySchema = new Schema<Entry>({
         required: true
     },
     difficulty: Number
-})
+});
 
 entrySchema.set('toJSON', {
-    transform: (_document, returnedObject) => {
-        returnedObject.id = returnedObject._id.toString();
+    transform: (_document, returnedObject: MongoReturnedObjectEntry) => {
+        returnedObject.id = returnedObject._id?.toString();
         delete returnedObject._id;
         delete returnedObject.__v;
     }
-})
+});
 
 const Entry = mongoose.model<Entry>('Entry', entrySchema);
 
