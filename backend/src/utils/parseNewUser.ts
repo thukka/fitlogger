@@ -1,15 +1,5 @@
 import { NewUser } from '../types';
-
-const isString = (text: unknown): text is string => {
-    return typeof text === 'string' || text instanceof String;
-};
-
-const parseString = (str: unknown): string => {
-    if (!str || !isString(str)) {
-        throw new Error('Incorrect or missing field! ' + str);
-    }
-    return str;
-};
+import parseString, { isString } from './parseString';
 
 export const parsePassword = (str: unknown): string => {
     if (!str || !isString(str)) {
@@ -19,7 +9,7 @@ export const parsePassword = (str: unknown): string => {
         throw new Error('Password is too short! Minimum 5 characters');
     }
     return str;
-}
+};
 
 const parseNewUser = ({ name, password, email }: { name: unknown, password: unknown, email: unknown }): NewUser => {
     if (!name || !password || !email) {
