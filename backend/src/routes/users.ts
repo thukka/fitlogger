@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/user';
 import { User as UserType, NewUser } from '../types';
 import parseNewUser, { parsePassword } from '../utils/parseNewUser';
+import parseString from '../utils/parseString';
 
 router.get('/', async (_req, res) => {
     const users: UserType[] = await User.find({});
@@ -12,7 +13,7 @@ router.get('/', async (_req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const body: NewUser = parseNewUser(req.body);
+        const body: NewUser = parseNewUser(req.body as NewUser);
 
         const saltRounds = 10;
         const passwordHash = await bcrypt.hash(body.password, saltRounds);
@@ -21,7 +22,7 @@ router.post('/', async (req, res) => {
             name: body.name,
             email: body.email,
             passwordHash,
-        })
+        });
 
         const savedUser = await user.save();
         res.json(savedUser);
@@ -32,7 +33,7 @@ router.post('/', async (req, res) => {
 
 router.put('/reset', async (req, res) => {
     try {
-        const email = req.body.email;
+        const email: string = parseString(req.body.email);
         const newPassword = parsePassword(req.body.password);
         const newPasswordHash = await bcrypt.hash(newPassword, 10);
         const updatedUser = await User.findOneAndUpdate({ email: email }, { passwordHash: newPasswordHash }, { new: true });
