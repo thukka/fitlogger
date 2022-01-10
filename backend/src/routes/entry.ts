@@ -1,19 +1,14 @@
 import express from 'express';
 const router = express.Router();
 import Entry from '../models/entry';
-import { Entry as EntryType } from '../types';
+import { Entry as EntryType, UnknownEntry } from '../types';
 import verifyToken from '../utils/verifyToken';
+import parseEntry from '../utils/parseEntry';
 
 router.post('/new', async (req, res) => {
     try {
-        const body = req.body;
-        const newEntry: EntryType = {
-            user: body.user,
-            date: body.date,
-            duration: body.duration,
-            distance: body.distance,
-            difficulty: body.difficulty ?? 0
-        };
+        const body = req.body as UnknownEntry;
+        const newEntry: EntryType = parseEntry(body);
         const entry = new Entry(newEntry);
         const savedEntry = await entry.save();
         res.json(savedEntry);
@@ -24,7 +19,7 @@ router.post('/new', async (req, res) => {
 
 router.get('/', async (req, res) => {
     const token = req.headers.authorization;
-    let decodedToken = verifyToken(token as string);
+    const decodedToken = verifyToken(token as string);
 
     if (!token || decodedToken === undefined) {
         return res.status(401).json({ error: 'Token expired or it was not found' });
@@ -41,7 +36,7 @@ router.get('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const token = req.headers.authorization;
-    let decodedToken = verifyToken(token as string);
+    const decodedToken = verifyToken(token as string);
 
     if (!token || decodedToken === undefined) {
         return res.status(401).json({ error: 'Token expired or it was not found' });
