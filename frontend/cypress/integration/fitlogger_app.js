@@ -54,6 +54,36 @@ describe('Fitlogger', function () {
       cy.contains('Stats').click();
       cy.get('#delete-icon').click();
     });
+
+    describe('Errors are shown if wrong inputs are given', function() {
+      beforeEach(function() {
+        cy.get('#input-date').type('2022-01-01');
+      });
+
+      it('Distance field contains letters', function() {
+        cy.get('#input-distance').type('foobar');
+        cy.get('#input-duration').type('35');
+        cy.get('#input-difficulty').type('5');
+        cy.contains('Submit').click();
+        cy.get('html').should('contain', 'Only numbers are allowed');
+      });
+
+      it('Duration field contains letters', function() {
+        cy.get('#input-distance').type('10');
+        cy.get('#input-duration').type('foobar');
+        cy.get('#input-difficulty').type('5');
+        cy.contains('Submit').click();
+        cy.get('html').should('contain', 'Only numbers are allowed');
+      });
+
+      it('Difficulty field contains letters', function() {
+        cy.get('#input-distance').type('10');
+        cy.get('#input-duration').type('35');
+        cy.get('#input-difficulty').type('foobar');
+        cy.contains('Submit').click();
+        cy.get('html').should('contain', 'Only numbers are allowed');
+      });
+    });
   });
 
   describe('User can\'t access website if auth failed', function() {
