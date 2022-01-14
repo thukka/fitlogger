@@ -1,1 +1,1 @@
-web: npm run ts-node -- index.ts
+web: npm run start
