@@ -35,7 +35,18 @@ const FrontPage = () => {
       await addEntry(user.token, entry);
       dispatch(timerNotification('New entry added!'));
     } catch (error) {
-      dispatch(timerNotification('Only numbers are allowed.', true));
+      let errMsg = error.response.data.error;
+      const errStatus = error.response.statusText;
+
+      if (errStatus === 'Bad Request') {
+        errMsg = 'Only numbers are allowed.';
+      }
+
+      if (errStatus === 'Unauthorized') {
+        errMsg = 'Session expired. Log in again.';
+      }
+
+      dispatch(timerNotification(errMsg, true));
     }
   };
 
