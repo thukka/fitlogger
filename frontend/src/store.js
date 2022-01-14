@@ -13,9 +13,4 @@ const store = createStore(reducer, composeWithDevTools(
   applyMiddleware(thunk)
 ));
 
-store.subscribe(() => {
-  const storeNow = store.getState();
-  console.log('storenow ', storeNow);
-});
-
 export default store;
