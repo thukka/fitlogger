@@ -7,13 +7,20 @@ import parseEntry from '../utils/parseEntry';
 
 router.post('/new', async (req, res) => {
     try {
+        const token = req.headers.authorization;
+        const decodedToken = verifyToken(token as string);
+    
+        if (!token || decodedToken === undefined) {
+            return res.status(401).json({ error: 'Token expired or it was not found.' });
+        }
+
         const body = req.body as UnknownEntry;
         const newEntry: EntryType = parseEntry(body);
         const entry = new Entry(newEntry);
         const savedEntry = await entry.save();
-        res.json(savedEntry);
+        return res.json(savedEntry);
     } catch ({ message }) {
-        res.status(400).send(message);
+        return res.status(400).send(message);
     }
 });
 
@@ -22,7 +29,7 @@ router.get('/', async (req, res) => {
     const decodedToken = verifyToken(token as string);
 
     if (!token || decodedToken === undefined) {
-        return res.status(401).json({ error: 'Token expired or it was not found' });
+        return res.status(401).json({ error: 'Token expired or it was not found.' });
     }
 
     const user = decodedToken.username;
@@ -39,7 +46,7 @@ router.delete('/:id', async (req, res) => {
     const decodedToken = verifyToken(token as string);
 
     if (!token || decodedToken === undefined) {
-        return res.status(401).json({ error: 'Token expired or it was not found' });
+        return res.status(401).json({ error: 'Token expired or it was not found.' });
     }
 
     const entry: EntryType | null = await Entry.findById(req.params.id);
@@ -48,7 +55,7 @@ router.delete('/:id', async (req, res) => {
         return res.status(204).send('Entry deleted');
     }
 
-    return res.status(401).json({ error: 'Unauthorized access' });
+    return res.status(401).json({ error: 'Unauthorized access.' });
 });
 
 export default router;
