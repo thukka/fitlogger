@@ -10,6 +10,8 @@ https://f1tlogger.herokuapp.com/
 User: test@testing.com  
 Password: heroku123!
 
+More specific READMEs can be found in backend and frontend folders.
+
 # Main frameworks and libraries used
 ## Backend
 - TypeScript

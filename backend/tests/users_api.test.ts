@@ -7,7 +7,7 @@ import { usersDbCheck } from './helpers/testHelper';
 const api = request(app);
 
 describe('users api', () => {
-    test('new user is succesfully created', async () => {
+    test('new user is successfully created', async () => {
         const newUser = {
             name: 'Mr Foo Bar',
             password: 'foobar',
@@ -23,7 +23,7 @@ describe('users api', () => {
         expect(checkUsersStatus).toHaveLength(2);
     });
 
-    test('password is succesfully changed', async () => {
+    test('password is successfully changed', async () => {
         const changedPassword = {
             email: 'foo@bar.fi',
             password: 'qwerty'
