@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
+import path from 'path';
 import cors from 'cors';
 import entryRouter from './src/routes/entry';
 import usersRouter from './src/routes/users';
@@ -22,7 +23,7 @@ run().catch(err => console.log(err));
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
-app.use(express.static('build'));
+app.use(express.static(path.join(__dirname, '../build')));
 
 app.use('/api/entry', entryRouter);
 app.use('/api/users', usersRouter);
@@ -30,5 +31,9 @@ app.use('/api/login', loginRouter);
 if (process.env.NODE_ENV === 'test') {
     app.use('/api/testing', testRouter);
 }
+
+app.get('/*', function (_req, res) {
+    res.sendFile(path.join(__dirname, '../build', '../build/index.html'));
+  });
 
 export default app;
