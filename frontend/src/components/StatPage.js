@@ -15,9 +15,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const StatPage = () => {
-  const [entryData, setEntryData] = useState([]);
   const selectorUser = state => state.user;
   const user = useSelector(selectorUser);
+  const [entryData, setEntryData] = useState([]);
   let distanceSum = 0;
   let durationSum = 0;
 
@@ -28,7 +28,9 @@ const StatPage = () => {
 
   const fetchUserData = async () => {
     const userEntry = await getUserEntry(user.token);
-    setEntryData(userEntry);
+    if (Array.isArray(userEntry)) {
+      setEntryData(userEntry);
+    }
   };
 
   const promptDelete = async ({ date, id }) => {
