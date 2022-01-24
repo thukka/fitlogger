@@ -4,7 +4,7 @@ const baseUrl = '/api/entry';
 const addEntry = async (token, entry) => {
   const newEntry = await axios.post(`${baseUrl}/new`, entry, {
     headers: {
-      Authorization: token
+      Authorization: `bearer ${token}`
     }
   });
   return newEntry;
@@ -13,7 +13,7 @@ const addEntry = async (token, entry) => {
 const getUserEntry = async (token) => {
   const userEntryList = await axios.get(`${baseUrl}`, {
     headers: {
-      Authorization: token
+      Authorization: `bearer ${token}`
     }
   });
   return userEntryList.data;
@@ -22,7 +22,7 @@ const getUserEntry = async (token) => {
 const deleteEntry = async (id, token) => {
   const deleteId = await axios.delete(`${baseUrl}/${id}`, {
     headers: {
-      Authorization: token
+      Authorization: `bearer ${token}`
     }
   });
   return deleteId;
