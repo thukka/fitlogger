@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
     const decodedToken = verifyToken(token as string);
 
     if (!token || decodedToken === undefined) {
-        return res.status(401).json({ error: 'Token expired or it was not found.' });
+        return res.status(401).json({ error: 'Token malformed, expired or it was not found.' });
     }
 
     const user = decodedToken.username;

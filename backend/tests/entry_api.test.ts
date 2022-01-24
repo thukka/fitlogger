@@ -19,7 +19,7 @@ describe('entry api', () => {
             await api
                 .post('/api/entry/new')
                 .send(newEntryObject)
-                .set({ Authorization: testUser.body.token })
+                .set({ Authorization: `bearer ${testUser.body.token}` })
                 .expect(200)
                 .expect('Content-Type', /application\/json/);
 
@@ -27,7 +27,7 @@ describe('entry api', () => {
             expect(entriesAfterPost[0].date).toContain('9999-11-17');
             await api
                 .delete(`/api/entry/${entriesAfterPost[0]._id}`)
-                .set({ Authorization: testUser.body.token })
+                .set({ Authorization: `bearer ${testUser.body.token}` })
                 .expect(204)
 
             const entriesAfterDelete = await entryDbCheck(testUser.body.username);
@@ -44,7 +44,7 @@ describe('entry api', () => {
             await api
                 .post('/api/entry/new')
                 .send(newEntry)
-                .set({ Authorization: getTestUser.body.token })
+                .set({ Authorization: `bearer ${getTestUser.body.token}` })
                 .expect(200)
                 .expect('Content-Type', /application\/json/);
 
@@ -61,7 +61,7 @@ describe('entry api', () => {
             await api
                 .post('/api/entry/new')
                 .send(newEntry)
-                .set({ Authorization: getTestUser.body.token })
+                .set({ Authorization: `bearer ${getTestUser.body.token}` })
                 .expect(400)
         });
 
