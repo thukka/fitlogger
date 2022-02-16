@@ -35,3 +35,8 @@ More specific READMEs can be found in backend and frontend folders.
 ![Home page](./screens/fitlogger_home.png)
 ![Home page error](./screens/fitlogger_home_err.png)
 ![Stat page](./screens/fitlogger_stats.png)
+
+# :construction: TODO :construction:
+
+- Allow commas to be inputted and transform them to dots.
+- Show error notification or logout the user if token is expired.
