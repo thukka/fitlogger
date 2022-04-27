@@ -32,7 +32,7 @@ const App = () => {
         <StatPage />
       </Route>
       <Route path='/'>
-        {user.username !== null ? <Redirect to='/frontpage' /> : <LoginPage />}
+        <Redirect to='/frontpage' />
       </Route>
     </Switch>
   ) : (
