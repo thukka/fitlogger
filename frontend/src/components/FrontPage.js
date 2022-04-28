@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { timerNotification } from '../reducers/notificationReducer';
 
 const checkField = (field) => {
-  return field.length <= 0 ? '0' : String(field);
+  return field.length <= 0 ? '0' : String(field).replaceAll(',', '.');
 };
 
 const FrontPage = () => {
