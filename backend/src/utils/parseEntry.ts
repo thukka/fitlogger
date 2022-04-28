@@ -6,9 +6,12 @@ const isNumber = (n: unknown): n is number => {
 };
 
 const parseNumber = (n: unknown): number => {
+    n = Number(n);
+
     if (!isNumber(n)) {
         throw new Error(`Not a number! ${n}`);
     }
+
     return n;
 };
 
@@ -23,16 +26,17 @@ const parseDate = (date: unknown): string => {
     return date;
 };
 
-const parseEntry = (body : UnknownEntry): Entry => {
+const parseEntry = (body: UnknownEntry): Entry => {
     if (!body.user || !body.date || !body.duration || !body.distance || !body.difficulty) {
         throw new Error('Field is missing!');
     }
+
     const newEntry: Entry = {
         user: parseString(body.user),
         date: parseDate(body.date),
-        duration: parseNumber(Number(body.duration)),
-        distance: parseNumber(Number(body.distance)),
-        difficulty: parseNumber(Number(body.difficulty))
+        duration: parseNumber(body.duration),
+        distance: parseNumber(body.distance),
+        difficulty: parseNumber(body.difficulty)
     };
     return newEntry;
 };
