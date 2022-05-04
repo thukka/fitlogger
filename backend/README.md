@@ -51,7 +51,7 @@
 - Entry:
   - Entry successfully deleted.
   - Entry successfully added.
-  - Error 4000 if a field is missing. 
+  - Error 400 if a field is missing. 
   - Error 401 if token is incorrect.
 - Login:
   - User can log in.
