@@ -5,9 +5,9 @@ Full stack project for personal use.
 App for logging cycling sessions to a database. Stat page for viewing basic info such as total distance and total time spent cycling. Entries can be removed from the database. Support for multiple users.
 
 Working demo with a test database:
-https://f1tlogger.herokuapp.com/
+https://web-production-757c.up.railway.app/
 
-User: test@testing.com  
+User: test@testing.com
 Password: heroku123!
 
 More specific READMEs can be found in backend and frontend folders.
