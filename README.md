@@ -7,7 +7,7 @@ App for logging cycling sessions to a database. Stat page for viewing basic info
 Working demo with a test database:
 https://web-production-757c.up.railway.app/
 
-User: test@testing.com
+User: test@testing.com  
 Password: heroku123!
 
 More specific READMEs can be found in backend and frontend folders.
